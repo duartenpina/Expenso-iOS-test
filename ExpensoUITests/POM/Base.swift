@@ -13,6 +13,12 @@ class Base {
     // Screen elements
     
     // Helper functions
+    
+    /** Waits for a given element to exist for a given amount of time
+     - Parameters:
+        - elementToWaitFor: the element that we want to exist after waiting some time
+        - timeout: the max amount of time in seconds, that should wait for
+     */
     func doWaitForElementToExist(elementToWaitFor: XCUIElement, timeout: TimeInterval) {
         let existsPredicate = NSPredicate(format: "exists == true")
         let expectation = XCTNSPredicateExpectation(predicate: existsPredicate, object: elementToWaitFor)
@@ -21,6 +27,16 @@ class Base {
         if result == .completed {
             print("Transaction was deleted successfully")
         }
+    }
+    
+    /** Clears the existing text in a textfield
+     - Parameters:
+        - inputElement: the element that has the text we want to clear
+     */
+    func clearText(inputElement: XCUIElement) {
+        let fieldValue = inputElement.value as? String
+        let deleteText = String(repeating: XCUIKeyboardKey.delete.rawValue, count: fieldValue!.count)
+        inputElement.typeText(deleteText)
     }
     
     // Intialize with the app instance

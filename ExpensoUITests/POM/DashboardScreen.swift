@@ -44,18 +44,29 @@ class DashboardScreen {
     }
     
     // Helper functions
+    
+    /** Open the filter menu from the dashboard
+     */
     func doOpenFilters() {
         filterButton.tap()
     }
     
+    /** Open the options menu from the dashboard
+     */
     func doOpenOptions() {
         optionsButton.tap()
     }
     
+    /** Open the expense details screen from the dashboard to add expenses
+     */
     func doAddExpenses() {
         addExpenseButton.tap()
     }
     
+    /** Find and open a transaction by its name
+     - Parameters:
+        - transactionElementName: the title text of the transaction
+     */
     func doViewTransactionByName(transactionElementName: String) {
         let transactionElement = app.staticTexts[transactionElementName]
         transactionElement.tap()

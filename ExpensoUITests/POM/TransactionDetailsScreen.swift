@@ -36,14 +36,21 @@ class TransactionDetailsScreen {
     }
         
     // Helper functions
+    
+    /** Open the share transaction menu from the transaction details screen
+     */
     func doShareTransaction() {
         shareButton.tap()
     }
     
+    /** Deletes the transaction without confirming on the displayed alert
+     */
     func doDeleteTransaction() {
         deleteButton.tap()
     }
     
+    /** Deletes the transaction and also confirms on the displayed alert
+     */
     func doDeleteTransactionWithConfirmation() {
         deleteButton.tap()
         alertDeleteButton.tap()
