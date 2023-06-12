@@ -54,39 +54,47 @@ final class AddTransactionsTests: XCTestCase {
     }
 
     func testAddIncome() throws {
-        // Check correct screen is displayed
+        /** Check correct screen is displayed
+         */
         XCTAssert(addEditTransactionsScreen.addTransactionTitleText.exists, "Element is not visible")
 
-        // Add transaction information
+        /** Add transaction information
+         */
         addEditTransactionsScreen.doAddTransactionTitle(title: TestParameters.incomeTrName)
         addEditTransactionsScreen.doAddTransactionAmount(amount: TestParameters.incomeTrValue)
 
-        // Change transaction description
+        /** Change transaction description
+         */
         addEditTransactionsScreen.setTransactionDescription(transactionDescription: "Others")
         addEditTransactionsScreen.setTransactionNote(note: "Automated Test Note")
         addEditTransactionsScreen.addTransactionButton.tap()
 
-        // Check transaction was created correctly
+        /** Check transaction was created correctly
+         */
         XCTAssert(dashboardScreen.totalBalanceText.exists, "Element is not visible")
         XCTAssert(dashboardScreen.totalBalanceAmount.exists, "Element is not visible")
         XCTAssertEqual(dashboardScreen.totalBalanceAmount.label, "$\(TestParameters.incomeTrValue)")
     }
     
     func testAddExpense() throws {
-        // Check correct screen is displayed
+        /** Check correct screen is displayed
+         */
         XCTAssert(addEditTransactionsScreen.addTransactionTitleText.exists, "Element is not visible")
 
-        // Add transaction information
+        /** Add transaction information
+         */
         addEditTransactionsScreen.doAddTransactionTitle(title: TestParameters.expenseTrName)
         addEditTransactionsScreen.doAddTransactionAmount(amount: TestParameters.expenseTrValue)
 
-        // Change transaction description
+        /** Change transaction description
+         */
         addEditTransactionsScreen.setTransactionType(transactionType: "Expense")
         addEditTransactionsScreen.setTransactionDescription(transactionDescription: "Utilities")
         addEditTransactionsScreen.setTransactionNote(note: "Automated Test Note")
         addEditTransactionsScreen.addTransactionButton.tap()
 
-        // Check transaction was created correctly
+        /** Check transaction was created correctly
+         */
         XCTAssert(dashboardScreen.totalBalanceText.exists, "Element is not visible")
         XCTAssert(dashboardScreen.totalBalanceAmount.exists, "Element is not visible")
         XCTAssertEqual(dashboardScreen.totalBalanceAmount.label, "$-\(TestParameters.expenseTrValue)")
