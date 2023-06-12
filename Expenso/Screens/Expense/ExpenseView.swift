@@ -57,6 +57,7 @@ struct ExpenseView: View {
                         Spacer()
                         NavigationLink(destination: NavigationLazyView(AddExpenseView(viewModel: AddExpenseViewModel())),
                                        label: { Image("plus_icon").resizable().frame(width: 32.0, height: 32.0) })
+                                           .accessibilityIdentifier("plusIcon")
                         .padding().background(Color.main_color).cornerRadius(35)
                     }
                 }.padding()
@@ -115,7 +116,9 @@ struct ExpenseMainView: View {
                 VStack(spacing: 16) {
                     TextView(text: "TOTAL BALANCE", type: .overline).foregroundColor(Color.init(hex: "828282")).padding(.top, 30)
                     TextView(text: "\(CURRENCY)\(getTotalBalance())", type: .h5).foregroundColor(Color.text_primary_color).padding(.bottom, 30)
+                        .accessibilityIdentifier("balanceAmount")
                 }.frame(maxWidth: .infinity).background(Color.secondary_color).cornerRadius(4)
+                    
                 
                 HStack(spacing: 8) {
                     NavigationLink(destination: NavigationLazyView(ExpenseFilterView(isIncome: true)),
@@ -210,6 +213,7 @@ struct ExpenseTransView: View {
                 Image(getTransTagIcon(transTag: expenseObj.tag ?? ""))
                     .resizable().frame(width: 24, height: 24).padding(16)
                     .background(Color.primary_color).cornerRadius(4)
+                    
             })
             
             VStack(alignment: .leading, spacing: 6) {
@@ -223,6 +227,7 @@ struct ExpenseTransView: View {
                     TextView(text: getTransTagTitle(transTag: expenseObj.tag ?? ""), type: .body_2).foregroundColor(Color.text_primary_color)
                     Spacer()
                     TextView(text: getDateFormatter(date: expenseObj.occuredOn, format: "MMM dd, yyyy"), type: .body_2).foregroundColor(Color.text_primary_color)
+                        .accessibilityIdentifier("viewTransaction")
                 }
             }.padding(.leading, 4)
             

@@ -80,6 +80,7 @@ struct ExpenseDetailedView: View {
                         })
                         .padding(EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 20))
                         .background(Color.main_color).cornerRadius(25)
+                        .accessibilityIdentifier("editIcon")
                     }.padding(24)
                 }
             }

@@ -32,15 +32,18 @@ struct ToolbarModelView: View {
                 if hasBackButt {
                     Button(action: { self.backButtonClick() },
                         label: { Image("back_arrow").resizable().frame(width: 34.0, height: 34.0) })
+                    .accessibilityIdentifier("backButton")
                 }
                 Spacer()
                 if let button2Method = self.button2Method {
                     Button(action: { button2Method() },
                            label: { Image(button2Icon ?? "").resizable().frame(width: 28.0, height: 28.0) }).padding(.horizontal, 8)
+                        .accessibilityIdentifier("button2")
                 }
                 if let button1Method = self.button1Method {
                     Button(action: { button1Method() },
                            label: { Image(button1Icon ?? "").resizable().frame(width: 28.0, height: 28.0) }).padding(.horizontal, 8)
+                        .accessibilityIdentifier("button1")
                 }
             }
             HStack {

@@ -166,6 +166,7 @@ struct AddExpenseView: View {
                             }
                         })
                         .padding(.vertical, 12).background(Color.main_color).cornerRadius(8)
+                        .accessibilityIdentifier("saveTransactionButton")
                     }.padding(.bottom, 16).padding(.horizontal, 8)
                 }
                 
