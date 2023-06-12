@@ -46,8 +46,12 @@ final class AddTransactionsTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        dashboardScreen.transactionView.tap()
-        transactionDetailsScreen.doDeleteTransactionWithConfirmation()
+        /** Clean up test environment by deleting transactions if they exist
+         */
+        while dashboardScreen.transactionView.exists {
+            dashboardScreen.transactionView.tap()
+            transactionDetailsScreen.doDeleteTransactionWithConfirmation()
+        }
         
         base.doWaitForElementToExist(elementToWaitFor: dashboardScreen.noTransactionText, timeout: 5)
         
@@ -98,5 +102,59 @@ final class AddTransactionsTests: XCTestCase {
         XCTAssert(dashboardScreen.totalBalanceText.exists, "Element is not visible")
         XCTAssert(dashboardScreen.totalBalanceAmount.exists, "Element is not visible")
         XCTAssertEqual(dashboardScreen.totalBalanceAmount.label, "$-\(TestParameters.expenseTrValue)")
+    }
+    
+    func testAddTransactionMandatoryFields() throws {
+        /** Check correct screen is displayed
+         */
+        XCTAssert(addEditTransactionsScreen.addTransactionTitleText.exists, "Element is not visible")
+
+        /** Tap on addTransactionButton without mandatory fields filled in should trigger title alert
+         */
+        addEditTransactionsScreen.addTransactionButton.tap()
+        XCTAssert(addEditTransactionsScreen.alert.exists, "Alert is not displayed")
+        XCTAssert(addEditTransactionsScreen.enterTitleAlertText.exists, "Alert title is not diplayed")
+        addEditTransactionsScreen.alertOkButton.tap()
+        
+        /** Fill in title details
+         */
+        addEditTransactionsScreen.doAddTransactionTitle(title: "Title")
+        
+        /** Tap on addTransactionButton without mandatory fields filled in should trigger amount alert
+         */
+        addEditTransactionsScreen.addTransactionButton.tap()
+        XCTAssert(addEditTransactionsScreen.alert.exists, "Alert is not displayed")
+        XCTAssert(addEditTransactionsScreen.enterAmountAlertText.exists, "Alert is not displayed")
+        addEditTransactionsScreen.alertOkButton.tap()
+        
+        /** Tap on addTransactionButton with an invalid number amount should trigger invalid number alert
+         */
+        addEditTransactionsScreen.doAddTransactionAmount(amount: "100.01.01")
+        addEditTransactionsScreen.addTransactionButton.tap()
+        XCTAssert(addEditTransactionsScreen.alert.exists, "Alert is not displayed")
+        XCTAssert(addEditTransactionsScreen.enterValidNumberAlertText.exists, "Alert is not displayed")
+        addEditTransactionsScreen.alertOkButton.tap()
+        
+        /** Tap on addTransactionButton with a negative number amount should trigger invalid number alert
+         */
+        addEditTransactionsScreen.transactionAmountInput.tap()
+        base.clearText(inputElement: addEditTransactionsScreen.transactionAmountInput)
+        addEditTransactionsScreen.transactionTitleInput.tap()
+        addEditTransactionsScreen.doAddTransactionAmount(amount: "-100")
+        addEditTransactionsScreen.addTransactionButton.tap()
+        XCTAssert(addEditTransactionsScreen.alert.exists, "Alert is not displayed")
+        XCTAssert(addEditTransactionsScreen.noNegativeNumberAlertText.exists, "Alert is not displayed")
+        addEditTransactionsScreen.alertOkButton.tap()
+        
+        /** Tap on addTransactionButton with an amount bigger than 1000000000 should trigger invalid smaller amount alert
+         */
+        addEditTransactionsScreen.transactionAmountInput.tap()
+        base.clearText(inputElement: addEditTransactionsScreen.transactionAmountInput)
+        addEditTransactionsScreen.transactionTitleInput.tap()
+        addEditTransactionsScreen.doAddTransactionAmount(amount: "1000000001")
+        addEditTransactionsScreen.addTransactionButton.tap()
+        XCTAssert(addEditTransactionsScreen.alert.exists, "Alert is not displayed")
+        XCTAssert(addEditTransactionsScreen.enterSmallerAmountAlertText.exists, "Alert is not displayed")
+        addEditTransactionsScreen.alertOkButton.tap()
     }
 }
